@@ -22,6 +22,12 @@ Supports single files, batch processing, recursive folder traversal, and in-plac
 2. Install dependencies:
 
 ```bash
+pip install pypdf
+````
+
+For deep cleaning:
+
+```bash
 pip install pypdf pikepdf
 ````
 
