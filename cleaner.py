@@ -1,6 +1,6 @@
 import os
 import shutil
-import PyPDF2
+import pypdf
 import logging
 import argparse
 
@@ -19,8 +19,8 @@ def clean_pdf_metadata(input_pdf_path, in_place=False):
         logging.info(f"Backup created: {backup_path}")
 
     with open(input_pdf_path, 'rb') as file:
-        reader = PyPDF2.PdfReader(file)
-        writer = PyPDF2.PdfWriter()
+        reader = pypdf.PdfReader(file)
+        writer = pypdf.PdfWriter()
 
         metadata = reader.metadata
         if metadata:

@@ -21,7 +21,7 @@ Supports single files, batch processing, recursive folder traversal, and in-plac
 2. Install dependencies:
 
 ```bash
-pip install PyPDF2
+pip install pypdf
 ```
 
 ---
