@@ -33,6 +33,30 @@ def sample_pdf_without_metadata(tmp_path):
     return pdf_path
 
 
+@pytest.fixture
+def sample_pdf_with_xmp_and_docinfo(tmp_path):
+    try:
+        import pikepdf
+    except ImportError:
+        pytest.skip("pikepdf not installed")
+
+    # Create a minimal PDF using pypdf
+    base_path = tmp_path / "deep_meta.pdf"
+    writer = PdfWriter()
+    writer.add_blank_page(width=72, height=72)
+    with open(base_path, "wb") as f:
+        writer.write(f)
+
+    # Add docinfo and XMP metadata using pikepdf
+    with pikepdf.open(base_path, allow_overwriting_input=True) as pdf:
+        pdf.docinfo["/Author"] = "UnitTester"
+        pdf.docinfo["/Title"] = "Test PDF"
+        pdf.Root.Metadata = pdf.make_stream(b"<x:xmpmeta>This is dummy XMP</x:xmpmeta>")
+        pdf.save(base_path)
+
+    return base_path
+
+
 def test_clean_metadata_creates_cleaned_copy(sample_pdf_with_metadata):
     cleaner.clean_pdf_metadata(str(sample_pdf_with_metadata), in_place=False)
     cleaned_path = str(sample_pdf_with_metadata).replace(".pdf", "_cleaned.pdf")
@@ -99,3 +123,14 @@ def test_find_pdfs_directory_recursive(tmp_path, sample_pdf_with_metadata):
     found = cleaner.find_pdfs([str(tmp_path)], recursive=True)
     assert str(sample_pdf_with_metadata) in found
 
+
+def test_deep_clean_removes_docinfo_and_xmp(sample_pdf_with_xmp_and_docinfo):
+    import pikepdf
+
+    cleaner.clean_pdf_metadata(str(sample_pdf_with_xmp_and_docinfo), in_place=False, deep_clean=True)
+    cleaned_path = str(sample_pdf_with_xmp_and_docinfo).replace(".pdf", "_cleaned.pdf")
+    assert os.path.exists(cleaned_path)
+
+    with pikepdf.open(cleaned_path) as pdf:
+        assert dict(pdf.docinfo) == {}
+        assert "/Metadata" not in pdf.Root
