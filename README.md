@@ -1,14 +1,3 @@
-Got it! Here's an updated, full `README.md` draft that includes:
-
-* Your existing content
-* A new section about the `--deep-clean` feature
-* A **Development & Testing** section on how to run tests
-* A brief note on dependencies and environment
-* An example GitHub Actions snippet for CI
-
----
-
-````markdown
 # PDF Metadata Cleaner
 
 A simple Python CLI tool to remove metadata from PDF files.  
