@@ -145,12 +145,3 @@ You are free to use, modify, and distribute the package in accordance with the t
 
 For contributions, bug reports, or suggestions, please visit the project repository on GitHub.
 
----
-
-```
-
----
-
-If you want, I can generate this as a `.md` file for you. Would you like that? Or any tweaks?
-```
-
