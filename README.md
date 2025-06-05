@@ -82,7 +82,6 @@ All actions and removed metadata are logged to `pdf_metadata_removal.log`.
 ## 🛡️ Notes
 
 - Always check `.bak` files before deleting, especially when using `-i`.
-- If a PDF has no metadata, it will still be copied cleanly.
 - Does not modify PDF contents — only strips metadata.
 
 ---

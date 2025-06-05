@@ -14,6 +14,18 @@ def clean_pdf_metadata(input_pdf_path, in_place=False):
         logging.error(f"File does not exist: {input_pdf_path}")
         return
 
+    with open(input_pdf_path, 'rb') as file:
+        reader = pypdf.PdfReader(file)
+        metadata = reader.metadata
+
+        # Check if metadata is empty or only has /Producer (which pypdf adds by default)
+        metadata_keys = set(metadata.keys()) if metadata else set()
+        metadata_needs_cleaning = metadata_keys and metadata_keys != {'/Producer'}
+
+        if not metadata_needs_cleaning:
+            logging.info(f"No removable metadata found in {input_pdf_path}. Skipping cleaning.")
+            return
+
     if in_place:
         backup_path = input_pdf_path + ".bak"
         try:
