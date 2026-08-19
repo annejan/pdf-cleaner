@@ -9,6 +9,6 @@ pillow==12.3.0
 pluggy==1.6.0
 Pygments==2.19.1
 pypdf==6.15.0
-pytest==8.4.0
+pytest==9.0.3
 pytest-cov==6.1.1
 wrapt==1.17.2
