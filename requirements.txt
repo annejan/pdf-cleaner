@@ -1,2 +1,2 @@
-pypdf==6.15.0
+pypdf==6.16.1
 pikepdf==9.8.1
